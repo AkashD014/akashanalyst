@@ -128,7 +128,7 @@ const Hero = () => {
 
               {/* Image */}
               <div className="w-60 h-60 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-primary/20 relative">
-                <img src={profileImg} alt="Akash Das" className="w-full h-full object-cover" />
+                <img src={profileImg} alt="Akash Das" className="w-full h-full object-cover object-[center_20%]" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
               </div>
 
