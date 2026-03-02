@@ -2,9 +2,11 @@ import { Mail, Linkedin, Github, Send, Loader2 } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const ref = useScrollReveal();
+  const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sending, setSending] = useState(false);
 
@@ -18,10 +20,10 @@ const Contact = () => {
         { from_name: form.name, from_email: form.email, message: form.message },
         "QA8WITDvzeVa5KRm-"
       );
-      alert("Thanks for reaching out! I'll get back to you soon.");
+      toast({ title: "Message sent!", description: "Thanks for reaching out! I'll get back to you soon." });
       setForm({ name: "", email: "", message: "" });
     } catch (error) {
-      alert("Something went wrong. Please try again later.");
+      toast({ title: "Error", description: "Something went wrong. Please try again later.", variant: "destructive" });
       console.error("EmailJS error:", error);
     } finally {
       setSending(false);
