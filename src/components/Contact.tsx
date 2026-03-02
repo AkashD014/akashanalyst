@@ -16,7 +16,7 @@ const Contact = () => {
         "service_m7t7g77",
         "template_7qrpbae",
         { from_name: form.name, from_email: form.email, message: form.message },
-        "QA8WITDvzeVa5KRm"
+        "QA8WITDvzeVa5KRm-"
       );
       alert("Thanks for reaching out! I'll get back to you soon.");
       setForm({ name: "", email: "", message: "" });
