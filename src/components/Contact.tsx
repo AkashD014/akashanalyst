@@ -1,16 +1,31 @@
-import { Mail, Linkedin, Github, Send } from "lucide-react";
+import { Mail, Linkedin, Github, Send, Loader2 } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const ref = useScrollReveal();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder — no backend yet
-    alert("Thanks for reaching out! I'll get back to you soon.");
-    setForm({ name: "", email: "", message: "" });
+    setSending(true);
+    try {
+      await emailjs.send(
+        "service_m7t7g77",
+        "template_7qrpbae",
+        { from_name: form.name, from_email: form.email, message: form.message },
+        "QA8WITDvzeVa5KRm"
+      );
+      alert("Thanks for reaching out! I'll get back to you soon.");
+      setForm({ name: "", email: "", message: "" });
+    } catch (error) {
+      alert("Something went wrong. Please try again later.");
+      console.error("EmailJS error:", error);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -72,10 +87,11 @@ const Contact = () => {
             />
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:shadow-primary/25 w-full"
+              disabled={sending}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-200 hover:shadow-lg hover:shadow-primary/25 w-full disabled:opacity-50"
             >
-              <Send size={16} />
-              Let's Connect
+              {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+              {sending ? "Sending..." : "Let's Connect"}
             </button>
           </form>
         </div>
